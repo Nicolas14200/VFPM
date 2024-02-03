@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { User } from "../../entities/User";
 import { Vehicles } from "../../entities/Vehicles";
 import { CreateUser } from "../../useCases/user/CreateUser";
@@ -9,7 +10,8 @@ import { InMemoryVehiclesCommandRepository } from "../adapters/inMemory/commands
 import { InMemoryUserQueryRepository } from "../adapters/inMemory/queries/InMemoryUserQueryRepository";
 import {ParkVehicles} from "../../useCases/utils/ParkVehicules";
 import { GetVehiclesById } from "../../useCases/vehicles/GetVehiclesById";
-import { VehiclesQueryRepository } from "../../repositories/vehicles/VehiclesQueryRepository";
+import { InMemoryVehiclesQueryRepository } from "../adapters/inMemory/queries/InMemoryVehiclesQueryRepository";
+import { VehiclesError } from "../../models/errors/VehiclesError";
 
 describe("Unit - ParkVehicules", () => {
     let userMap: Map<string, User>;
@@ -25,7 +27,7 @@ describe("Unit - ParkVehicules", () => {
     let vehicles: Vehicles;
     let parkVehicles: ParkVehicles;
     let getVehiclesById: GetVehiclesById;
-    let vehiclesQueryRepo: VehiclesQueryRepository;
+    let vehiclesQueryRepo: InMemoryVehiclesQueryRepository;
 
     beforeAll (async ()=> {
         userMap = new Map();
@@ -43,7 +45,8 @@ describe("Unit - ParkVehicules", () => {
             userId: user.props.id, 
             vehiclesId :vehicles.props.id
         });
-        getVehiclesById = new GetVehiclesById(vehiclesQueryRepo)
+        vehiclesQueryRepo = new InMemoryVehiclesQueryRepository(vehiclesMap);
+        getVehiclesById = new GetVehiclesById(vehiclesQueryRepo);
         parkVehicles = new ParkVehicles(getUserById, getVehiclesById, vehiclesCommandRepo);
     })
     it("Should park vehicles", async () => {
@@ -56,5 +59,17 @@ describe("Unit - ParkVehicules", () => {
             vehiculeId: vehicles.props.id
         })
         expect(result.props.positions?.length).toEqual(1);
+    })
+
+    it("Should return an error if vehicle is already parked at this location.", async () => {
+        const result = parkVehicles.execute({
+            position: {
+                lat:10,
+                lng:10
+            },
+            userId: user.props.id,
+            vehiculeId: vehicles.props.id
+        })
+        expect(result).rejects.toThrow(VehiclesError.VehiclesAlreadyParkAtLocation);
     })
 })

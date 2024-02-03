@@ -1,4 +1,5 @@
-import { InMemoryUserCommandsRepository } from "../adapters/inMemory/commands/InMemoryUserCommandsRepository";
+import 'reflect-metadata';
+import { InMemoryUserCommandRepository } from "../adapters/inMemory/commands/InMemoryUserCommandRepository";
 import { InMemoryUserQueryRepository } from "../adapters/inMemory/queries/InMemoryUserQueryRepository";
 import { CreateUser } from "../../useCases/user/CreateUser";
 import { User } from "../../entities/User";
@@ -6,7 +7,7 @@ import {GetUserById} from "../../useCases/user/GetUserById";
 
 describe("Unit - CreateUser", () => {
     let userMap: Map<string, User>;
-    let userCommandRepo: InMemoryUserCommandsRepository;
+    let userCommandRepo: InMemoryUserCommandRepository;
     let userQueryRepo: InMemoryUserQueryRepository;
     let createUser: CreateUser;
     let user: User;
@@ -14,7 +15,7 @@ describe("Unit - CreateUser", () => {
 
     beforeAll(async () => {
         userMap = new Map();
-        userCommandRepo = new InMemoryUserCommandsRepository(userMap);
+        userCommandRepo = new InMemoryUserCommandRepository(userMap);
         userQueryRepo = new InMemoryUserQueryRepository(userMap);
         createUser = new CreateUser(userCommandRepo);
         getUserById = new GetUserById(userQueryRepo);
@@ -23,6 +24,6 @@ describe("Unit - CreateUser", () => {
 
     it("Should create a user", async () => {
         const result = await getUserById.execute(user.props.id);
-        expect(result.props.name).toEqual("Nico")
+        expect(result.props.name).toEqual("Nico");
     })
 })

@@ -1,11 +1,10 @@
-const { Given, When, Then } = require('cucumber');
-const assert = require('assert');
+import { Given, When, Then } from 'cucumber';
+import * as assert from 'assert';
 
-let myFleet = [];
-let anotherUserFleet = [];
-let vehicle = null;
-let message = null;
-
+let myFleet: any[] = [];
+let anotherUserFleet: any[] = [];
+let vehicle: any = null;
+let message: string | null = null;
 
 Given('my fleet', function () {
   myFleet = [];

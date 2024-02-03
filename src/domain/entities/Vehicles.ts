@@ -5,7 +5,8 @@ import { VehiclesError } from "../models/errors/VehiclesError";
 export interface VehiclesProps {
   id: string;
   userId: string;
-  positions?: Position[];
+  positions: Position[];
+  vehiclePlateNumber:string;
 }
 
 export class Vehicles {
@@ -14,24 +15,24 @@ export class Vehicles {
     this.props = props;
   }
 
-  static create(userId: string) {
+  static create(userId: string, vehiclePlateNumber:string ){
     return new Vehicles({
       id: v4(),
-      userId: userId,
+      userId,
+      positions: [],
+      vehiclePlateNumber
     });
   }
 
   addPosition(lat: number, lng: number) {
-    if (
-      !this.props.positions.includes({
-        lat: lat,
-        lng: lng,
-      })
-    ) {
-      this.props.positions.push({
-        lat: lat,
-        lng: lng,
-      });
+    const newPosition = { lat: lat, lng: lng };
+
+    const positionExists = this.props.positions.some((position) => {
+      return position.lat === lat && position.lng === lng;
+    });
+
+    if (!positionExists) {
+      this.props.positions.push(newPosition);
     } else {
       throw new VehiclesError.VehiclesAlreadyParkAtLocation(
         "Vehicle is already parked at this location."

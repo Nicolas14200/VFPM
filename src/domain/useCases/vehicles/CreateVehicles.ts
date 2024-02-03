@@ -1,13 +1,22 @@
+import { inject, injectable } from "inversify";
 import { Vehicles } from "../../entities/Vehicles";
 import { VehiclesCommandRepository } from "../../repositories/vehicles/VehiclesCommandRepository";
 import { Usecase } from "../Usecase";
+import { VFPMIdentifiers } from "../VFPMIdentifiers";
 
-export class CreateVehicles implements Usecase<string, Vehicles> {
+export interface CreateVehiclesProps {
+  userId: string, 
+  vehiclePlateNumber:string
+}
+
+@injectable()
+export class CreateVehicles implements Usecase<CreateVehiclesProps, Vehicles> {
   constructor(
+    @inject(VFPMIdentifiers.vehiclesCommandRepository)
     private readonly vehiclesCommandRepository: VehiclesCommandRepository
   ) {}
-  async execute(userId: string): Promise<Vehicles> {
-    const vehicle = Vehicles.create(userId);
+  async execute(payload: CreateVehiclesProps): Promise<Vehicles> {
+    const vehicle = Vehicles.create(payload.userId, payload.vehiclePlateNumber);
     this.vehiclesCommandRepository.save(vehicle);
     return vehicle;
   }

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { Vehicles } from "../../entities/Vehicles";
 import { CreateVehicles } from "../../useCases/vehicles/CreateVehicles";
 import { GetVehiclesById } from "../../useCases/vehicles/GetVehiclesById";
@@ -17,7 +18,10 @@ describe("Unit - GetVehiclesById", () => {
         vehiclesCommandRepo = new InMemoryVehiclesCommandRepository(vehiclesMap);
         createVehicle = new CreateVehicles(vehiclesCommandRepo);
         vehiclesQueryRepo = new InMemoryVehiclesQueryRepository(vehiclesMap);
-        vehicles = await createVehicle.execute("0000");
+        vehicles = await createVehicle.execute({
+            userId:"0000",
+            vehiclePlateNumber:"AZ458",
+        });
         getVehiclesById = new GetVehiclesById(vehiclesQueryRepo);
     })
     it("Should return a vehicle by id", async () => {

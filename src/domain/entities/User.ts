@@ -28,4 +28,9 @@ export class User {
       throw new UserError.VehiclesAlreadyExisting("Vehicles Already Existing");
     }
   }
+
+  addNewFleet(fleetId: string){
+    this.props.fleet.push(fleetId);
+  }
+  
 }

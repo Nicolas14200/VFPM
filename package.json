@@ -11,13 +11,15 @@
     "@types/node": "^14.18.63",
     "cucumber": "^6.0.7",
     "jest": "^29.7.0",
+    "routing-controllers": "^0.10.4",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^4.9.5"
   },
   "scripts": {
     "testCucumber": "cucumber-js --profile default",
-    "testJest": "npx jest --runInBand"
+    "testJest": "npx jest --runInBand --coverage",
+    "start": "ts-node src/index.ts "
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.0",
@@ -26,6 +28,8 @@
     "faker": "^6.6.6",
     "iconv-lite": "^0.6.3",
     "inversify": "^6.0.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.1",
     "uuid": "^9.0.1"
   }
 }

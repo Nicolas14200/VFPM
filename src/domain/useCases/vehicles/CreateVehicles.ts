@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import { Vehicles } from "../../entities/Vehicles";
 import { VehiclesCommandRepository } from "../../repositories/vehicles/VehiclesCommandRepository";
-import { Usecase } from "../Usecase";
-import { VFPMIdentifiers } from "../VFPMIdentifiers";
+import { Usecase } from "../../models/Usecase";
+import { VFPMIdentifiers } from "../../models/VFPMIdentifiers";
 
 export interface CreateVehiclesProps {
   userId: string, 

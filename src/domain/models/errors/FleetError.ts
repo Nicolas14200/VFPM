@@ -1,6 +1,6 @@
 import { DomainError } from "./DomainError";
 
-export namespace UserError {
+export namespace FleetError {
     export class VehiclesAlreadyExisting extends DomainError{}
-    export class GetByIdFailed extends DomainError{}
+    export class FleetNotFound extends DomainError{}
    }

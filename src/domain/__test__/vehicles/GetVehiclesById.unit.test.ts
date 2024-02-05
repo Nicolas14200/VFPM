@@ -26,7 +26,6 @@ describe("Unit - GetVehiclesById", () => {
     })
     it("Should return a vehicle by id", async () => {
         const result = await getVehiclesById.execute(vehicles.props.id);
-        console.log(result)
         expect(result.props.id).toEqual(vehicles.props.id);
     })
 })

@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
-import { Usecase } from "../Usecase";
-import { VFPMIdentifiers } from "../VFPMIdentifiers";
+import { Usecase } from "../../models/Usecase";
+import { VFPMIdentifiers } from "../../models/VFPMIdentifiers";
 import { FleetQueryRepository } from "../../repositories/fleet/FleetQueryRepository";
 import { Fleet } from "../../entities/Fleet";
 

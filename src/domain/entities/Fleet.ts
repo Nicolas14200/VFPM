@@ -1,8 +1,9 @@
 import { v4 } from "uuid";
+import { FleetError } from "../models/errors/FleetError";
 
 export interface FleetProps {
   id: string;
-  PlateNumbers: string[];
+  plateNumbers: string[];
 }
 export class Fleet {
   props: FleetProps;
@@ -13,7 +14,15 @@ export class Fleet {
   static create() {
     return new Fleet({
       id: v4(),
-      PlateNumbers: [],
+      plateNumbers: [],
     });
+  }
+
+  addVehicle(plateNumber: string){
+    if (!this.props.plateNumbers.includes(plateNumber)) {
+      this.props.plateNumbers.push(plateNumber);
+    } else {
+      throw new FleetError.VehiclesAlreadyExisting("Vehicles Already Existing");
+    }
   }
 }

@@ -1,25 +1,49 @@
 import { Container } from "inversify";
-import { VFPMIdentifiers } from "../../domain/useCases/VFPMIdentifiers";
-import { User } from "../../domain/entities/User";
-import { Vehicles } from "../../domain/entities/Vehicles";
+import mongoose from "mongoose";
+import { VFPMIdentifiers } from "../../domain/models/VFPMIdentifiers";
 import { CreateUser } from "../../domain/useCases/user/CreateUser";
 import { CreateVehicles } from "../../domain/useCases/vehicles/CreateVehicles";
-import { CommanderConfig } from "./configureCommand";
-
-let userMap: Map<string, User> = new Map();
-let vehiclesMap: Map<string, Vehicles> = new Map();
+import { Controller } from "./Controller";
+import { CreateFleet } from "../../domain/useCases/fleet/CreateFleet";
+import { AsignFleet } from "../../domain/useCases/user/AsignFleet";
+import { GetUserById } from "../../domain/useCases/user/GetUserById";
+import { GetVehiclesById } from "../../domain/useCases/vehicles/GetVehiclesById";
+import { GetFleetById } from "../../domain/useCases/fleet/GetFleetById";
+import { ParkVehicles } from "../../domain/useCases/vehicles/ParkVehicules";
+import { RegisterVehicles } from "../../domain/useCases/vehicles/RegisterVehicles";
+import { MongoDbUserCommandRepository } from "../../infra/mongoDb/commands/MongoDbUserCommandRepository";
+import { MongoDbUserQueryRepository } from "../../infra/mongoDb/queries/MongoDbUserQueryRepository";
+import { MongoDbVehiclesCommandRepository } from "../../infra/mongoDb/commands/MongoDbVehiclesCommandRepository";
+import { MongoDbVehiclesQueryRepository } from "../../infra/mongoDb/queries/MongoDbVehiculesQueryRepository";
+import { MongoDbFleetCommandRepository } from "../../infra/mongoDb/commands/MongoDbFleetCommandRepository";
+import { MongoDbFleetQueryRepository } from "../../infra/mongoDb/queries/MongoDbFleetQueryRepository";
 
 export class AppDependencies extends Container {
     async init() {
-        this.bind(VFPMIdentifiers.userCommandRepository).toConstantValue(userMap);
-        this.bind(VFPMIdentifiers.userQueryRepository).toConstantValue(userMap);
-        this.bind(VFPMIdentifiers.vehiclesCommandRepository).toConstantValue(vehiclesMap);
-        this.bind(VFPMIdentifiers.vehiclesQueryRepository).toConstantValue(vehiclesMap);
-        this.bind(VFPMIdentifiers.getUserById).toSelf();
-        this.bind(VFPMIdentifiers.getVehiclesById).toSelf();
+        mongoose.connect('mongodb://127.0.0.1:27017/VFPM');
+        this.bind(VFPMIdentifiers.userCommandRepository).toConstantValue(new MongoDbUserCommandRepository());
+        this.bind(VFPMIdentifiers.userQueryRepository).toConstantValue(new MongoDbUserQueryRepository());
         this.bind(CreateUser).toSelf();
+        this.bind(GetUserById).toSelf();
+        this.bind(AsignFleet).toSelf();
+
+        this.bind(VFPMIdentifiers.vehiclesCommandRepository).toConstantValue(new MongoDbVehiclesCommandRepository());
+        this.bind(VFPMIdentifiers.vehiclesQueryRepository).toConstantValue(new MongoDbVehiclesQueryRepository());
         this.bind(CreateVehicles).toSelf();
-        this.bind(CommanderConfig).toSelf();
+        this.bind(GetVehiclesById).toSelf();
+        this.bind(ParkVehicles).toSelf();
+        this.bind(RegisterVehicles).toSelf();
+
+        this.bind(VFPMIdentifiers.fleetCommandRepository).toConstantValue(new MongoDbFleetCommandRepository());
+        this.bind(VFPMIdentifiers.fleetQueryRepository).toConstantValue(new MongoDbFleetQueryRepository());
+        this.bind(CreateFleet).toSelf();
+        this.bind(GetFleetById).toSelf();
+
+        this.bind(Controller).toSelf();
+        const controller = this.get<Controller>(Controller);
+        controller.configure().then(() => {
+          console.log("Commander est configuré et prêt à accepter les commandes.");
+        });
         return this;
     }
 }

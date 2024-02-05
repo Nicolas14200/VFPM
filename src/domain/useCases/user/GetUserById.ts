@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import { User } from "../../entities/User";
 import { UserQueryRepository } from "../../repositories/user/UserQueryRepository";
-import { Usecase } from "../Usecase";
-import { VFPMIdentifiers } from "../VFPMIdentifiers";
+import { Usecase } from "../../models/Usecase";
+import { VFPMIdentifiers } from "../../models/VFPMIdentifiers";
 
 @injectable()
 export class GetUserById implements Usecase<string, User> {

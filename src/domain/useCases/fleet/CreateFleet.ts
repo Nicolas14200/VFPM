@@ -1,8 +1,8 @@
 import { inject } from "inversify";
 import { Fleet } from "../../entities/Fleet";
 import { FleetCommandRepository } from "../../repositories/fleet/FleetCommandRepository";
-import { Usecase } from "../Usecase";
-import { VFPMIdentifiers } from "../VFPMIdentifiers";
+import { Usecase } from "../../models/Usecase";
+import { VFPMIdentifiers } from "../../models/VFPMIdentifiers";
 
 export class CreateFleet implements Usecase<void, Fleet> {
     constructor(

@@ -1,8 +1,8 @@
 import { User } from "../../entities/User";
-import { Usecase } from "../Usecase";
+import { Usecase } from "../../models/Usecase";
 import { UserCommandRepository } from "../../repositories/user/UserCommandRepository";
 import { inject, injectable } from "inversify";
-import { VFPMIdentifiers } from "../VFPMIdentifiers";
+import { VFPMIdentifiers } from "../../models/VFPMIdentifiers";
 
 @injectable()
 export class CreateUser implements Usecase<string, User> {

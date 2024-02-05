@@ -25,7 +25,7 @@ export class Vehicles {
   }
 
   addPosition(lat: number, lng: number) {
-    const newPosition = { lat: lat, lng: lng };
+    const newPosition = { lat, lng };
 
     const positionExists = this.props.positions.some((position) => {
       return position.lat === lat && position.lng === lng;

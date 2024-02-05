@@ -1,22 +1,23 @@
 import { Command } from 'commander';
 import { injectable } from 'inversify';
+import { CreateUser } from '../../domain/useCases/user/CreateUser';
 
 @injectable()
-export class CommanderConfig {
+export class Controller {
     constructor(
-        
+        private readonly _createUser: CreateUser,
     ) {}
 
-    public static async configure(): Promise<void> {
+    public async configure(): Promise<void> {
         const program = new Command();
-
-        // Define CLI commands and options
+        
         program
-            .command('create <userId>')
+            .command('create <name>')
             .description('Create a fleet for the specified user')
-            .action((userId) => {
-                console.log(`Fleet created for user ${userId}`);
-                // You can add logic here to generate fleetId and return it
+            .action((name) => {
+                console.log(`User created for user ${name}`);
+                this._createUser.execute(name);
+
             });
 
         program

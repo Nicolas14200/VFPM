@@ -20,7 +20,6 @@ describe("Unit - CreateUser", () => {
 
   it("Should create a user", async () => {
     user = await createUser.execute("Nico");
-    console.log(user);
     expect(user.props.name).toEqual("Nico");
     expect(user.props.id).toBeDefined();
     expect(user.props.fleet).toBeDefined();

@@ -16,7 +16,7 @@ describe("Unit - CreateFleet", () => {
 
     it("Should create a fleet", async () => {
         const result = await createFleet.execute();
-        expect(result.props.PlateNumbers).toBeDefined();
+        expect(result.props.plateNumbers).toBeDefined();
         expect(result.props.id).toBeDefined();
     })
 })

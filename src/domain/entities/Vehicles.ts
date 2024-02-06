@@ -4,9 +4,9 @@ import { VehiclesError } from "../models/errors/VehiclesError";
 
 export interface VehiclesProps {
   id: string;
-  userId: string;
+  fleetId: string[];
   positions: Position[];
-  vehiclePlateNumber:string;
+  vehiclePlateNumber: string;
 }
 
 export class Vehicles {
@@ -15,22 +15,24 @@ export class Vehicles {
     this.props = props;
   }
 
-  static create(userId: string, vehiclePlateNumber:string ){
+  static create(fleetId: string, vehiclePlateNumber: string) {
+    const fleetIdArr = [];
+    fleetIdArr.push(fleetId);
     return new Vehicles({
       id: v4(),
-      userId,
+      fleetId: fleetIdArr,
       positions: [],
-      vehiclePlateNumber
+      vehiclePlateNumber,
     });
   }
 
-  addPosition(lat: number, lng: number) {
-    const newPosition = { lat, lng };
-
+  addPosition(lat: number, lng: number, alt: number) {
+    const newPosition = { lat, lng, alt };
     const positionExists = this.props.positions.some((position) => {
-      return position.lat === lat && position.lng === lng;
+      return (
+        +position.lat === +lat && +position.lng === +lng && +position.alt === +alt
+      );
     });
-
     if (!positionExists) {
       this.props.positions.push(newPosition);
     } else {

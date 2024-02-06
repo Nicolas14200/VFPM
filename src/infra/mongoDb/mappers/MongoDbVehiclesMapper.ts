@@ -4,7 +4,7 @@ import { Position } from "../../../domain/valuesObject/Position";
 
 export interface MongoDbVehiclesMappperProps {
     id: string;
-    userId: string;
+    fleetId: string[];
     positions: Position[];
     vehiclePlateNumber:string;
 }
@@ -13,7 +13,7 @@ export class MongoDbVehiclesMappper implements Mapper<Vehicles, MongoDbVehiclesM
   toDomain(raw: MongoDbVehiclesMappperProps): Vehicles {
     return new Vehicles({
         id: raw.id,
-        userId: raw.userId,
+        fleetId: raw.fleetId.map((id: string)=>id),
         positions: raw.positions.map((pos) => pos),
         vehiclePlateNumber: raw.vehiclePlateNumber
     });

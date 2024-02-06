@@ -5,4 +5,5 @@ export namespace VehiclesError {
     export class VehiclesAlreadyParkAtLocation extends DomainError{}
     export class RegisterVehiclesFailed extends DomainError{}
     export class VehiclesNotFound extends DomainError{}
+    export class PlateNumberNotFound extends DomainError{}
 }

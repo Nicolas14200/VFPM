@@ -8,18 +8,16 @@ const vehicleShema = new mongoose.Schema({
     unique: true,
     index: true,
   },
-  userId: {
+  fleetId: [{
     type: String,
     required: true,
     index: true,
-  },
+  }],
   positions: [positionModel],
 
   vehiclePlateNumber: {
     type: String,
     required: true,
-    unique: true,
-    index: true,
   },
 });
 export const vehiclesModel = mongoose.model("vehicles", vehicleShema);

@@ -15,8 +15,8 @@ describe("Integration - MongoDbUserCommandRepository", () => {
     await mongoose.connect("mongodb://127.0.0.1:27017/VFPM");
     vehiclesCommandRepo = new MongoDbVehiclesCommandRepository();
     vehiclesQueryRepo = new MongoDbVehiclesQueryRepository();
-    vehicles = Vehicles.create("userID", v4());
-    vehicles.addPosition(1, 2);
+    vehicles = Vehicles.create("fleetId", v4());
+    vehicles.addPosition(1, 2, 3);
   });
 
   it("Should save a vehicles", async () => {
@@ -31,5 +31,10 @@ describe("Integration - MongoDbUserCommandRepository", () => {
   it("Should return null if vehicles doesn't exist", async () => {
     const result = await vehiclesQueryRepo.getById("");
     expect(result).toBeFalsy();
+  });
+
+  it("Should return a vehicle by plate number", async () => {
+    const result = await vehiclesQueryRepo.getByPlateNumber(vehicles.props.vehiclePlateNumber);
+    expect(result.props.vehiclePlateNumber).toEqual(vehicles.props.vehiclePlateNumber)
   });
 });

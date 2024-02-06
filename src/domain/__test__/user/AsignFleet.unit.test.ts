@@ -4,6 +4,7 @@ import { Fleet } from "../../entities/Fleet";
 import { AsignFleet } from "../../useCases/user/AsignFleet";
 import { InMemoryUserCommandRepository } from "../adapters/inMemory/commands/InMemoryUserCommandRepository";
 import { InMemoryUserQueryRepository } from "../adapters/inMemory/queries/InMemoryUserQueryRepository";
+import {UserError} from "../../models/errors/UserError";
 
 describe("Unit - Asignfleet", () => {
   let userMap: Map<string, User>;
@@ -12,6 +13,7 @@ describe("Unit - Asignfleet", () => {
   let asignFleet: AsignFleet;
   let userCommandRepo: InMemoryUserCommandRepository;
   let userQueryRepo: InMemoryUserQueryRepository;
+
   beforeAll(() => {
     user = User.create("nico");
     fleet = Fleet.create();
@@ -21,6 +23,7 @@ describe("Unit - Asignfleet", () => {
     userCommandRepo.save(user);
     asignFleet = new AsignFleet(userQueryRepo, userCommandRepo);
   });
+  
   it("Should add new fleet in fleet array of user", async () => {
     await asignFleet.execute({
       userId: user.props.id,
@@ -28,5 +31,13 @@ describe("Unit - Asignfleet", () => {
     });
     const result = await userQueryRepo.getById(user.props.id)
     expect(result.props.fleet[0]).toEqual(fleet.props.id);
+  });
+
+  it("Should return an error if user not exist", async () => {
+    const result = asignFleet.execute({
+      userId: "fake ID",
+      fleetId: fleet.props.id,
+    });
+    expect(result).rejects.toThrow(UserError.UserNotFound)
   });
 });

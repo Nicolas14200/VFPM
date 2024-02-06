@@ -1,49 +1,29 @@
-import { Given, When, Then } from 'cucumber';
-import * as assert from 'assert';
+import { When, Then } from "cucumber";
+import * as assert from "assert";
+import { myFleetRegister, vehicleRegister } from "./configStep";
 
-let myFleet: any[] = [];
-let anotherUserFleet: any[] = [];
-let vehicle: any = null;
-let message: string | null = null;
+let messageAlreadyRegister: string;
 
-Given('my fleet', function () {
-  myFleet = [];
+When("I register this vehicle into my fleet", () => {
+  myFleetRegister.push(vehicleRegister.vehiclePlateNumber);
 });
 
-Given('a vehicle', function () {
-  vehicle = {};
+Then("this vehicle should be part of my vehicle fleet", () => {
+  assert.ok(myFleetRegister.includes(vehicleRegister.vehiclePlateNumber));
 });
 
-When('I register this vehicle into my fleet', function () {
-  myFleet.push(vehicle);
-});
-
-Then('this vehicle should be part of my vehicle fleet', function () {
-  assert.ok(myFleet.includes(vehicle));
-});
-
-Given('I have registered this vehicle into my fleet', function () {
-  myFleet.push(vehicle);
-});
-
-When('I try to register this vehicle into my fleet', function () {
-  if (myFleet.includes(vehicle)) {
-    message = "This vehicle has already been registered into my fleet";
+When("I try to register this vehicle into my fleet", () => {
+  if (myFleetRegister.includes(vehicleRegister.vehiclePlateNumber)) {
+    messageAlreadyRegister =
+      "This vehicle has already been registered into my fleet";
   }
 });
 
-Then('I should be informed this this vehicle has already been registered into my fleet', function () {
-  assert.strictEqual(message, "This vehicle has already been registered into my fleet");
+Then("I should be informed that this vehicle has already been registered into my fleet", async () => {
+  await new Promise((resolve) => setTimeout(resolve, 100)); 
+  assert.strictEqual(
+    messageAlreadyRegister,
+    "This vehicle has already been registered into my fleet"
+  );
 });
 
-Given('the fleet of another user', function () {
-  anotherUserFleet = [];
-});
-
-Given('this vehicle has been registered into the other user\'s fleet', function () {
-  anotherUserFleet.push(vehicle);
-});
-
-Then('this vehicle should be part of my vehicle fleet', function () {
-  assert.ok(myFleet.includes(vehicle));
-});

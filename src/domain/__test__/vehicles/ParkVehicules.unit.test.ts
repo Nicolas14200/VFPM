@@ -57,7 +57,7 @@ describe("Unit - ParkVehicules", () => {
         fleetQueryRepo = new InMemoryFleetQueryRepository(fleetMap);
 
         createUser = new CreateUser(userCommandRepo);
-        createVehicle = new CreateVehicles(vehiclesCommandRepo);
+        createVehicle = new CreateVehicles();
 
         asignFleet = new AsignFleet(userQueryRepo, userCommandRepo);
         
@@ -67,10 +67,11 @@ describe("Unit - ParkVehicules", () => {
         user = await createUser.execute("Nico");
 
         vehicles = await createVehicle.execute({
-            userId:"0000",
+            fleetId:"0000",
             vehiclePlateNumber:"AZ458",
         });
-
+        vehiclesCommandRepo.save(vehicles);
+        
         fleet = Fleet.create();
         await fleetCommandRepo.save(fleet);
 
@@ -89,19 +90,22 @@ describe("Unit - ParkVehicules", () => {
         const result = await parkVehicles.execute({
             position: {
                 lat:10,
-                lng:10
+                lng:10, 
+                alt: 1
             },
             vehiculeId: vehicles.props.id
         })
         expect(result.props.positions.length).toEqual(1);
         expect(result.props.positions[0].lat).toEqual(10);
+        expect(result.props.positions[0].alt).toEqual(1);
     })
 
     it("Should return an error if vehicle is already parked at this location.", async () => {
         const result = parkVehicles.execute({
             position: {
                 lat:10,
-                lng:10
+                lng:10,
+                alt: 1
             },
             vehiculeId: vehicles.props.id
         })
@@ -112,7 +116,8 @@ describe("Unit - ParkVehicules", () => {
         const result = parkVehicles.execute({
             position: {
                 lat:10,
-                lng:10
+                lng:10,
+                alt: 1
             },
             vehiculeId: "fake ID"
         })

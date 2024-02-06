@@ -18,12 +18,20 @@ describe('Integration - MongoDbUserCommandRepository', () => {
 
     it("Should save a user", async () => {
         await userCommandRepo.save(user);
-        const result = userQueryRepo.getById(user.props.id);
-        expect((await result).props.name).toEqual("Nicolas");
+        const result = await userQueryRepo.getById(user.props.id);
+        expect(result.props.name).toEqual("Nicolas");
     })
 
     it("Should return null if user doesn't exist", async () => {
         const result = await userQueryRepo.getById("");
         expect(result).toBeFalsy();
+    })
+
+    it("Should update user", async () => {
+        user.addNewFleet('aaaa');
+        await userCommandRepo.update(user);
+        const result = await userQueryRepo.getById(user.props.id);
+        console.log("result", result);
+        expect(result.props.fleet[0]).toEqual('aaaa');
     })
 })

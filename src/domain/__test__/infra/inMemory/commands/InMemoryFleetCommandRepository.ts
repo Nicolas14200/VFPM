@@ -4,9 +4,14 @@ import { FleetCommandRepository } from "../../../../repositories/fleet/FleetComm
 export class InMemoryFleetCommandRepository implements FleetCommandRepository {
 
     constructor(readonly fleetMap: Map<string, Fleet>) {}
+
     async save(fleet: Fleet): Promise<Fleet> {
         this.fleetMap.set(fleet.props.id, fleet);
         return fleet;
     }
 
+    async update(fleet: Fleet): Promise<Fleet> {
+        this.fleetMap.set(fleet.props.id, fleet);
+        return fleet;
+    }
 }

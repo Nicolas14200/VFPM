@@ -13,7 +13,7 @@ export class CreateUser implements Usecase<string, User> {
 
   async execute(name: string): Promise<User> {
     const user = User.create(name);
-    this.userCommandRepository.save(user);
+    await this.userCommandRepository.save(user);
     return user;
   }
 }

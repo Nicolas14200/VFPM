@@ -3,6 +3,7 @@ import { Usecase } from "../../models/Usecase";
 import { VFPMIdentifiers } from "../../models/VFPMIdentifiers";
 import { UserQueryRepository } from "../../repositories/user/UserQueryRepository";
 import { UserCommandRepository } from "../../repositories/user/UserCommandRepository";
+import { UserError } from "../../models/errors/UserError";
 
 export interface AsignFleetProps {
   userId: string;
@@ -12,7 +13,7 @@ export interface AsignFleetProps {
 @injectable()
 export class AsignFleet implements Usecase<AsignFleetProps, void> {
   constructor(
-    @inject(VFPMIdentifiers.userCommandRepository)
+    @inject(VFPMIdentifiers.userQueryRepository)
     private readonly userQueryRepository: UserQueryRepository,
     @inject(VFPMIdentifiers.userCommandRepository)
     private readonly userCommandRepository: UserCommandRepository,
@@ -20,7 +21,10 @@ export class AsignFleet implements Usecase<AsignFleetProps, void> {
 
   async execute(payload: AsignFleetProps): Promise<void> {
     const user = await this.userQueryRepository.getById(payload.userId);
+    if(!user){
+      throw new UserError.UserNotFound("User not found");
+    }
     user.addNewFleet(payload.fleetId);
-    this.userCommandRepository.save(user);
+    await this.userCommandRepository.update(user);
     }
 }

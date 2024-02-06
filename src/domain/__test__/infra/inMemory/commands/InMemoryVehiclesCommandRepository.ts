@@ -9,5 +9,10 @@ export class InMemoryVehiclesCommandRepository implements VehiclesCommandReposit
         this.vehiclesMap.set(vehicles.props.id, vehicles);
         return vehicles;
     }
+
+    async update(vehicles: Vehicles): Promise<Vehicles> {
+        this.vehiclesMap.set(vehicles.props.id, vehicles);
+        return vehicles;
+    }
     
 }

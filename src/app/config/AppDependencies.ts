@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { VFPMIdentifiers } from "../../domain/models/VFPMIdentifiers";
 import { CreateUser } from "../../domain/useCases/user/CreateUser";
 import { CreateVehicles } from "../../domain/useCases/vehicles/CreateVehicles";
-import { Controller } from "./Controller";
+import { Controller } from "../Controller";
 import { CreateFleet } from "../../domain/useCases/fleet/CreateFleet";
 import { AsignFleet } from "../../domain/useCases/user/AsignFleet";
 import { GetUserById } from "../../domain/useCases/user/GetUserById";
@@ -17,6 +17,7 @@ import { MongoDbVehiclesCommandRepository } from "../../infra/mongoDb/commands/M
 import { MongoDbVehiclesQueryRepository } from "../../infra/mongoDb/queries/MongoDbVehiculesQueryRepository";
 import { MongoDbFleetCommandRepository } from "../../infra/mongoDb/commands/MongoDbFleetCommandRepository";
 import { MongoDbFleetQueryRepository } from "../../infra/mongoDb/queries/MongoDbFleetQueryRepository";
+import { GetByPlateNumber } from "../../domain/useCases/vehicles/GetByPlateNumber";
 
 export class AppDependencies extends Container {
     async init() {
@@ -33,6 +34,7 @@ export class AppDependencies extends Container {
         this.bind(GetVehiclesById).toSelf();
         this.bind(ParkVehicles).toSelf();
         this.bind(RegisterVehicles).toSelf();
+        this.bind(GetByPlateNumber).toSelf();
 
         this.bind(VFPMIdentifiers.fleetCommandRepository).toConstantValue(new MongoDbFleetCommandRepository());
         this.bind(VFPMIdentifiers.fleetQueryRepository).toConstantValue(new MongoDbFleetQueryRepository());
@@ -41,9 +43,7 @@ export class AppDependencies extends Container {
 
         this.bind(Controller).toSelf();
         const controller = this.get<Controller>(Controller);
-        controller.configure().then(() => {
-          console.log("Commander est configuré et prêt à accepter les commandes.");
-        });
+        controller.configure();
         return this;
     }
 }

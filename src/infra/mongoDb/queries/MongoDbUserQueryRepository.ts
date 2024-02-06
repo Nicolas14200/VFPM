@@ -18,6 +18,7 @@ export class MongoDbUserQueryRepository implements UserQueryRepository {
     });
 
     if (!result) {
+
       return null;
     }
     return this.mongoDbUserMappper.toDomain(result);

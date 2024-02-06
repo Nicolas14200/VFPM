@@ -22,14 +22,23 @@ export class ParkVehicles implements Usecase<ParkVehiclesProps, Vehicles> {
   ) {}
 
   async execute(payload: ParkVehiclesProps): Promise<Vehicles> {
+    console.log("payload", payload)
     const vehicle = await this.vehiclesQueryRepository.getById(
       payload.vehiculeId
     );
-    if(!vehicle){
-      throw new VehiclesError.VehiclesNotFound("Vehicle not found.")
+    console.log("vehicle by id", vehicle)
+    if (!vehicle) {
+      throw new VehiclesError.VehiclesNotFound("Vehicle not found.");
     }
-    vehicle.addPosition(payload.position.lat, payload.position.lng);
-    await this.vehiclesCommandRepository.save(vehicle);
+
+    vehicle.addPosition(
+      payload.position.lat,
+      payload.position.lng,
+      payload.position.alt
+    );
+    
+    console.log("vehicle position", vehicle)
+    await this.vehiclesCommandRepository.update(vehicle);
     return vehicle;
   }
 }

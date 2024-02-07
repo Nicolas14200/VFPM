@@ -20,16 +20,17 @@ init-app:
 
 .PHONY: create-user
 create-user:
-	cd dist && ./index.js create-user $(USER_NAME) # make create-user USER_NAME="nico"
+	cd dist && ./index.js create-user $(USER_NAME)
 
 .PHONY: create-fleet
 create-fleet:
-	cd dist && ./index.js create-fleet $(USER_ID) # make create-user USER-ID="Id"
+	cd dist && ./index.js create-fleet $(USER_ID)
 
 .PHONY: register-vehicle
 register-vehicle:
-	cd dist && ./index.js register-vehicle $(FLEET_ID) ${PLATE_NUMBER} # make register-vehicle FLEET-ID="Id"
+	cd dist && ./index.js register-vehicle $(FLEET_ID) ${PLATE_NUMBER}
 
 .PHONY: localize-vehicle
 localize-vehicle:
-	cd dist && ./index.js localize-vehicle $(FLEET_ID) ${PLATE_NUMBER} ${LAT} ${LNG} ${ALT} # make register-vehicle FLEET-ID="Id"
+	cd dist && ./index.js localize-vehicle $(FLEET_ID) ${PLATE_NUMBER} ${LAT} ${LNG} ${ALT}
+

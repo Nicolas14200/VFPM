@@ -14,6 +14,7 @@ Clone the repository and install the dependencies:
 
 To init the application:
 
+`make db-start`
 `make init-app`
 
 ## 🧪 Testing
@@ -35,23 +36,25 @@ This program adheres as closely as possible to the principles of clean architect
 
 - **domain**: The heart of the application containing the business logic. This layer includes entities, use-cases, and interfaces.
 - **infra**: This layer integrates all external tools, independent from the application, such as databases and service providers. A mapper for standardizing raw data input is also present.
-- **app**: Acts as a bridge between the core and the adapters. API endpoints and the implementation of use-cases by the adapters are defined here.
+- **app**: Acts as a bridge between the core and the adapters.CLI and the implementation of use-cases by the adapters are defined here.
 
-## 🌍 Configuration
+## 🌍 CLI
 
-- `make create-user USER_NAME=<Username>` => return user id.
-- `make create-fleet USER_ID=<UserId>` => return fleet id.
-- `make register-vehicle FLEET_ID=<fleetId> PLATE_NUMBER=<vehiclePlateNumber>`.
-- `make localize-vehicle USER_ID=<IdUtilisateur> FLEET_ID=<IdParc> PLATE_NUMBER=<vehiclePlateNumber> LAT=<lat> LNG=<lng> ALT=<alt>`.
+- `make create-user USER_NAME=<Username>` => return user id
+- `make create-fleet USER_ID=<UserId>` => return fleet id
+- `make register-vehicle FLEET_ID=<fleetId> PLATE_NUMBER=<vehiclePlateNumber>`
+- `make localize-vehicle USER_ID=<IdUtilisateur> FLEET_ID=<IdParc> PLATE_NUMBER=<vehiclePlateNumber> LAT=<lat> LNG=<lng> ALT=<alt>`
 
 ## 🧐 Testing Details
 
-The program's layers are tested with Jest. You will find:
+The program's layers are tested with Jest and cucumber. You will find:
 
+- DDD test in features folder.
 - Unit Tests in the domain.
-- Integration Tests in the adapters.
-- End-to-End Tests in the app.
+- Integration Tests in the infra.
+- 100% test coverage : ![Coverage](./coverage-test-jest.png)
 
 ## 🔚 Conclusion
 
-The program is structured for easy maintenance and scalability. Future enhancements might include improved API error handling and the addition of appropriate status codes.
+The program is structured for easy maintenance and scalability. 
+For potential improvment, add end to end tests for the CLI.

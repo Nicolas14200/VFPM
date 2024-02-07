@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+import "reflect-metadata";
 import mongoose from "mongoose";
 import { MongoDbFleetCommandRepository } from "../mongoDb/commands/MongoDbFleetCommandRepository";
 import { Fleet } from "../../domain/entities/Fleet";
@@ -29,9 +29,9 @@ describe("Integration - MongoDbUserCommandRepository", () => {
   });
 
   it("Should update fleet", async () => {
-    fleet.addVehicle('AZERTY');
+    fleet.addVehicle("AZERTY");
     await fleetCommandRepo.update(fleet);
     const result = await fleetQueryRepo.getById(fleet.props.id);
-    expect(result.props.plateNumbers[1]).toEqual('AZERTY')
+    expect(result.props.plateNumbers[1]).toEqual("AZERTY");
   });
 });

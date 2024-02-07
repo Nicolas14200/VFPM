@@ -1,3 +1,3 @@
-export interface Usecase<I,O>{
-    execute(payload?:I): Promise<O> | O
-} 
+export interface Usecase<I, O> {
+  execute(payload?: I): Promise<O> | O;
+}

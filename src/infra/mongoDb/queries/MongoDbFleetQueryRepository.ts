@@ -3,7 +3,10 @@ import { FleetQueryRepository } from "../../../domain/repositories/fleet/FleetQu
 import { injectable } from "inversify";
 import { Fleet } from "../../../domain/entities/Fleet";
 import { fleetModel } from "../model/FleetModel";
-import { MongoDbFleetMappper, MongoDbVehiclesMappperProps } from "../mappers/MongoDbFleetMapper";
+import {
+  MongoDbFleetMappper,
+  MongoDbVehiclesMappperProps,
+} from "../mappers/MongoDbFleetMapper";
 
 @injectable()
 export class MongoDbFleetQueryRepository implements FleetQueryRepository {
@@ -17,6 +20,5 @@ export class MongoDbFleetQueryRepository implements FleetQueryRepository {
       return null;
     }
     return this.mongoDbfleetMappper.toDomain(result);
-
   }
 }

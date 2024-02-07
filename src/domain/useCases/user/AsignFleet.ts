@@ -16,15 +16,15 @@ export class AsignFleet implements Usecase<AsignFleetProps, void> {
     @inject(VFPMIdentifiers.userQueryRepository)
     private readonly userQueryRepository: UserQueryRepository,
     @inject(VFPMIdentifiers.userCommandRepository)
-    private readonly userCommandRepository: UserCommandRepository,
+    private readonly userCommandRepository: UserCommandRepository
   ) {}
 
   async execute(payload: AsignFleetProps): Promise<void> {
     const user = await this.userQueryRepository.getById(payload.userId);
-    if(!user){
+    if (!user) {
       throw new UserError.UserNotFound("User not found");
     }
     user.addNewFleet(payload.fleetId);
     await this.userCommandRepository.update(user);
-    }
+  }
 }

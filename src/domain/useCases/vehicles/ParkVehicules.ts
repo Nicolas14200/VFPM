@@ -34,7 +34,7 @@ export class ParkVehicles implements Usecase<ParkVehiclesProps, Vehicles> {
       payload.position.lng,
       payload.position.alt
     );
-    
+
     await this.vehiclesCommandRepository.update(vehicle);
     return vehicle;
   }

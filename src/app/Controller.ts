@@ -55,7 +55,9 @@ export class Controller {
           fleetId: fleetId,
           vehiclePlateNumber: vehiclePlateNumber,
         });
-        console.log(`Vehicle plate number : ${vehiclePlateNumber} save in fleet :${fleetId}`)
+        console.log(
+          `Vehicle plate number : ${vehiclePlateNumber} save in fleet :${fleetId}`
+        );
         process.exit();
       });
 

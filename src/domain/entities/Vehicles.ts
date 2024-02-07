@@ -30,7 +30,9 @@ export class Vehicles {
     const newPosition = { lat, lng, alt };
     const positionExists = this.props.positions.some((position) => {
       return (
-        +position.lat === +lat && +position.lng === +lng && +position.alt === +alt
+        +position.lat === +lat &&
+        +position.lng === +lng &&
+        +position.alt === +alt
       );
     });
     if (!positionExists) {

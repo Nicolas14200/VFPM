@@ -20,8 +20,7 @@ export class User {
     });
   }
 
-  addNewFleet(fleetId: string){
+  addNewFleet(fleetId: string) {
     this.props.fleet.push(fleetId);
   }
-  
 }

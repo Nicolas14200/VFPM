@@ -18,7 +18,7 @@ export class Fleet {
     });
   }
 
-  addVehicle(plateNumber: string){
+  addVehicle(plateNumber: string) {
     if (!this.props.plateNumbers.includes(plateNumber)) {
       this.props.plateNumbers.push(plateNumber);
     } else {

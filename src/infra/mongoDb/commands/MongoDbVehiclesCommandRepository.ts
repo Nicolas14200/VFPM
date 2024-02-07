@@ -8,7 +8,6 @@ import { vehiclesModel } from "../model/VehiclesModel";
 export class MongoDbVehiclesCommandRepository
   implements VehiclesCommandRepository
 {
-
   async save(vehicles: Vehicles): Promise<Vehicles> {
     const newModel = new vehiclesModel({
       id: vehicles.props.id,
@@ -29,7 +28,7 @@ export class MongoDbVehiclesCommandRepository
       },
       {
         $set: {
-          positions: vehicles.props.positions.map((pos)=>pos),
+          positions: vehicles.props.positions.map((pos) => pos),
         },
       },
       {
@@ -38,5 +37,4 @@ export class MongoDbVehiclesCommandRepository
     );
     return vehicles;
   }
-
 }

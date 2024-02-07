@@ -1,4 +1,4 @@
-import { When, Then } from "cucumber";
+import { When, Then } from "@cucumber/cucumber";
 import * as assert from "assert";
 import { vehiclePark, location } from "./configStep";
 

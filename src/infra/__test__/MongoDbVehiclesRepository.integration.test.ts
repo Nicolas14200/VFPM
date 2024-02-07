@@ -6,7 +6,6 @@ import { MongoDbVehiclesQueryRepository } from "../mongoDb/queries/MongoDbVehicu
 import { v4 } from "uuid";
 
 describe("Integration - MongoDbUserCommandRepository", () => {
-    
   let vehiclesCommandRepo: MongoDbVehiclesCommandRepository;
   let vehiclesQueryRepo: MongoDbVehiclesQueryRepository;
   let vehicles: Vehicles;
@@ -28,13 +27,28 @@ describe("Integration - MongoDbUserCommandRepository", () => {
     expect(result.props.positions.length).toEqual(1);
   });
 
-  it("Should return null if vehicles doesn't exist", async () => {
+  it("Should return null if vehicles doesn't exist via get by id", async () => {
     const result = await vehiclesQueryRepo.getById("");
     expect(result).toBeFalsy();
   });
 
   it("Should return a vehicle by plate number", async () => {
-    const result = await vehiclesQueryRepo.getByPlateNumber(vehicles.props.vehiclePlateNumber);
-    expect(result.props.vehiclePlateNumber).toEqual(vehicles.props.vehiclePlateNumber)
+    const result = await vehiclesQueryRepo.getByPlateNumber(
+      vehicles.props.vehiclePlateNumber
+    );
+    expect(result.props.vehiclePlateNumber).toEqual(
+      vehicles.props.vehiclePlateNumber
+    );
+  });
+
+  it("Should update a vehicle ", async () => {
+    vehicles.addPosition(10, 10, 10);
+    const result = await vehiclesCommandRepo.update(vehicles);
+    expect(result.props.positions[1].lng).toEqual(10);
+  });
+
+  it("Should return null if vehicles doesn't exist via get by plate number", async () => {
+    const result = await vehiclesQueryRepo.getByPlateNumber("");
+    expect(result).toBeFalsy();
   });
 });

@@ -8,11 +8,13 @@ const vehicleShema = new mongoose.Schema({
     unique: true,
     index: true,
   },
-  fleetId: [{
-    type: String,
-    required: true,
-    index: true,
-  }],
+  fleetId: [
+    {
+      type: String,
+      required: true,
+      index: true,
+    },
+  ],
   positions: [positionModel],
 
   vehiclePlateNumber: {

@@ -22,7 +22,7 @@ export class MongoDbUserCommandRepository implements UserCommandRepository {
       },
       {
         $set: {
-          fleet: user.props.fleet.map((fleet)=>fleet),
+          fleet: user.props.fleet.map((fleet) => fleet),
         },
       },
       {

@@ -5,11 +5,10 @@ const fleetShema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    index: true
+    index: true,
   },
   plateNumbers: {
     type: [String],
   },
- 
-})
+});
 export const fleetModel = mongoose.model("fleet", fleetShema);

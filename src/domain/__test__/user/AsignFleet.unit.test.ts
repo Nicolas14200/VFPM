@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import { User } from "../../entities/User";
 import { Fleet } from "../../entities/Fleet";
 import { AsignFleet } from "../../useCases/user/AsignFleet";
-import { InMemoryUserCommandRepository } from "../adapters/inMemory/commands/InMemoryUserCommandRepository";
-import { InMemoryUserQueryRepository } from "../adapters/inMemory/queries/InMemoryUserQueryRepository";
+import { InMemoryUserCommandRepository } from "../infra/inMemory/commands/InMemoryUserCommandRepository";
+import { InMemoryUserQueryRepository } from "../infra/inMemory/queries/InMemoryUserQueryRepository";
 import {UserError} from "../../models/errors/UserError";
 
 describe("Unit - Asignfleet", () => {

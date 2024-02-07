@@ -18,8 +18,8 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "testCucumber": "cucumber-js --profile default",
-    "testJest": "npx jest --runInBand --coverage",
+    "cucumber": "cucumber-js --profile default",
+    "jest": "npx jest --runInBand --coverage",
     "start": "ts-node src/index.ts "
   },
   "dependencies": {
@@ -30,8 +30,10 @@
     "iconv-lite": "^0.6.3",
     "inquirer": "^9.2.14",
     "inversify": "^6.0.2",
+    "mock-stdin": "^1.0.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.1.1",
+    "supertest": "^6.3.4",
     "uuid": "^9.0.1"
   }
 }

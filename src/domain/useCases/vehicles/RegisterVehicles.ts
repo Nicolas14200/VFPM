@@ -21,28 +21,21 @@ export class RegisterVehicles implements Usecase<RegisterVehiclesProps, void> {
     private readonly fleetCommandRepository: FleetCommandRepository,
     @inject(VFPMIdentifiers.vehiclesCommandRepository)
     private readonly vehiclesCommandRepository: VehiclesCommandRepository,
-    private readonly createVehicles: CreateVehicles,
+    private readonly createVehicles: CreateVehicles
   ) {}
 
   async execute(payload: RegisterVehiclesProps): Promise<void> {
-    try {
-      const fleet = await this.fleetQueryRepository.getById(payload.fleetId);
-      if (!fleet ) {
-        throw new VehiclesError.RegisterVehiclesFailed(
-          "Fleet doesn't exist"
-        );
-      }
-      fleet.addVehicle(payload.vehiclePlateNumber);
-      await this.fleetCommandRepository.update(fleet);
-
-      const vehicle = await this.createVehicles.execute({
-        fleetId: payload.fleetId,
-        vehiclePlateNumber: payload.vehiclePlateNumber,
-      })
-      await this.vehiclesCommandRepository.save(vehicle)
-
-    } catch (error) {
-      throw error;
+    const fleet = await this.fleetQueryRepository.getById(payload.fleetId);
+    if (!fleet) {
+      throw new VehiclesError.RegisterVehiclesFailed("Fleet doesn't exist");
     }
+    fleet.addVehicle(payload.vehiclePlateNumber);
+    await this.fleetCommandRepository.update(fleet);
+
+    const vehicle = await this.createVehicles.execute({
+      fleetId: payload.fleetId,
+      vehiclePlateNumber: payload.vehiclePlateNumber,
+    });
+    await this.vehiclesCommandRepository.save(vehicle);
   }
 }

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Fleet } from "../../entities/Fleet";
-import { InMemoryFleetQueryRepository } from "../adapters/inMemory/queries/InMemoryFleetQueryRepository";
-import { InMemoryFleetCommandRepository } from "../adapters/inMemory/commands/InMemoryFleetCommandRepository";
+import { InMemoryFleetQueryRepository } from "../infra/inMemory/queries/InMemoryFleetQueryRepository";
+import { InMemoryFleetCommandRepository } from "../infra/inMemory/commands/InMemoryFleetCommandRepository";
 import {GetFleetById} from "../../useCases/fleet/GetFleetById";
 import {CreateFleet} from "../../useCases/fleet/CreateFleet";
 

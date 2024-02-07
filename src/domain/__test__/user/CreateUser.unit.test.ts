@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { InMemoryUserCommandRepository } from "../adapters/inMemory/commands/InMemoryUserCommandRepository";
-import { InMemoryUserQueryRepository } from "../adapters/inMemory/queries/InMemoryUserQueryRepository";
+import { InMemoryUserCommandRepository } from "../infra/inMemory/commands/InMemoryUserCommandRepository";
+import { InMemoryUserQueryRepository } from "../infra/inMemory/queries/InMemoryUserQueryRepository";
 import { CreateUser } from "../../useCases/user/CreateUser";
 import { User } from "../../entities/User";
 

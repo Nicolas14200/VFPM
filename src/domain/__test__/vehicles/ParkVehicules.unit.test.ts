@@ -8,12 +8,12 @@ import { RegisterVehicles } from "../../useCases/vehicles/RegisterVehicles";
 import { CreateVehicles } from "../../useCases/vehicles/CreateVehicles";
 import {ParkVehicles} from "../../useCases/vehicles/ParkVehicules";
 import {AsignFleet} from "../../useCases/user/AsignFleet";
-import { InMemoryUserCommandRepository } from "../adapters/inMemory/commands/InMemoryUserCommandRepository";
-import { InMemoryVehiclesCommandRepository } from "../adapters/inMemory/commands/InMemoryVehiclesCommandRepository";
-import { InMemoryUserQueryRepository } from "../adapters/inMemory/queries/InMemoryUserQueryRepository";
-import { InMemoryVehiclesQueryRepository } from "../adapters/inMemory/queries/InMemoryVehiclesQueryRepository";
-import { InMemoryFleetQueryRepository } from '../adapters/inMemory/queries/InMemoryFleetQueryRepository';
-import { InMemoryFleetCommandRepository } from '../adapters/inMemory/commands/InMemoryFleetCommandRepository';
+import { InMemoryUserCommandRepository } from "../infra/inMemory/commands/InMemoryUserCommandRepository";
+import { InMemoryVehiclesCommandRepository } from "../infra/inMemory/commands/InMemoryVehiclesCommandRepository";
+import { InMemoryUserQueryRepository } from "../infra/inMemory/queries/InMemoryUserQueryRepository";
+import { InMemoryVehiclesQueryRepository } from "../infra/inMemory/queries/InMemoryVehiclesQueryRepository";
+import { InMemoryFleetQueryRepository } from '../infra/inMemory/queries/InMemoryFleetQueryRepository';
+import { InMemoryFleetCommandRepository } from '../infra/inMemory/commands/InMemoryFleetCommandRepository';
 
 describe("Unit - ParkVehicules", () => {
 
@@ -61,7 +61,7 @@ describe("Unit - ParkVehicules", () => {
 
         asignFleet = new AsignFleet(userQueryRepo, userCommandRepo);
         
-        registerVehicles = new RegisterVehicles(fleetQueryRepo, fleetCommandRepo, vehiclesQueryRepo);  
+        registerVehicles = new RegisterVehicles(fleetQueryRepo, fleetCommandRepo, vehiclesCommandRepo, createVehicle);  
         parkVehicles = new ParkVehicles(vehiclesQueryRepo, vehiclesCommandRepo);
 
         user = await createUser.execute("Nico");
@@ -82,7 +82,7 @@ describe("Unit - ParkVehicules", () => {
  
         await registerVehicles.execute({
             fleetId: fleet.props.id, 
-            vehiclesId :vehicles.props.id
+            vehiclePlateNumber: vehicles.props.vehiclePlateNumber,
         });
     })
 

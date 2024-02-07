@@ -13,3 +13,23 @@ db-exec:
 .PHONY: db-kill
 db-kill: 
 	sudo docker rm -f mongodb
+
+.PHONY: init-app
+init-app:
+	rm -r dist | true && tsc && chmod +x dist/index.js
+
+.PHONY: create-user
+create-user:
+	cd dist && ./index.js create-user $(USER_NAME) # make create-user USER_NAME="nico"
+
+.PHONY: create-fleet
+create-fleet:
+	cd dist && ./index.js create-fleet $(USER_ID) # make create-user USER-ID="Id"
+
+.PHONY: register-vehicle
+register-vehicle:
+	cd dist && ./index.js register-vehicle $(FLEET_ID) ${PLATE_NUMBER} # make register-vehicle FLEET-ID="Id"
+
+.PHONY: localize-vehicle
+localize-vehicle:
+	cd dist && ./index.js localize-vehicle $(FLEET_ID) ${PLATE_NUMBER} ${LAT} ${LNG} ${ALT} # make register-vehicle FLEET-ID="Id"

@@ -31,7 +31,6 @@ describe('Integration - MongoDbUserCommandRepository', () => {
         user.addNewFleet('aaaa');
         await userCommandRepo.update(user);
         const result = await userQueryRepo.getById(user.props.id);
-        console.log("result", result);
         expect(result.props.fleet[0]).toEqual('aaaa');
     })
 })

@@ -1,21 +1,24 @@
 {
-    "compilerOptions": {
-        "rootDir": "./",
-        "outDir": "./dist",
-        "types": ["node", "jest"],
-        "baseUrl": "./",
-        "paths": {
-          "@electron/*": ["../electron/*"],
-          "@src/*": ["src/*"]
-        },
-        "esModuleInterop": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "module" : "CommonJS",
-        "target": "ESNext",
-        "resolveJsonModule": true,
-        "moduleResolution": "node"
-    },
+  "compilerOptions": {
+    "strict": false,
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+  },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules", "src/**/*.test.ts", "jest.config.ts"]
   }

@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import { Vehicles } from "../../entities/Vehicles";
 import { CreateVehicles } from "../../useCases/vehicles/CreateVehicles";
 import { GetByPlateNumber } from "../../useCases/vehicles/GetByPlateNumber";
-import { InMemoryVehiclesCommandRepository } from "../adapters/inMemory/commands/InMemoryVehiclesCommandRepository";
-import { InMemoryVehiclesQueryRepository } from "../adapters/inMemory/queries/InMemoryVehiclesQueryRepository";
+import { InMemoryVehiclesCommandRepository } from "../infra/inMemory/commands/InMemoryVehiclesCommandRepository";
+import { InMemoryVehiclesQueryRepository } from "../infra/inMemory/queries/InMemoryVehiclesQueryRepository";
 
 describe('Unit - GetByPlateNumber', () => {
     let vehiclesMap: Map<string, Vehicles>;

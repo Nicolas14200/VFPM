@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Fleet } from "../../entities/Fleet";
-import { InMemoryFleetCommandRepository } from "../adapters/inMemory/commands/InMemoryFleetCommandRepository";
+import { InMemoryFleetCommandRepository } from "../infra/inMemory/commands/InMemoryFleetCommandRepository";
 import {CreateFleet} from "../../useCases/fleet/CreateFleet";
 
 describe("Unit - CreateFleet", () => {

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import 'reflect-metadata';
 import { AppDependencies } from "./app/config/AppDependencies";
 

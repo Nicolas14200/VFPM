@@ -20,6 +20,7 @@ import { MongoDbFleetQueryRepository } from "../../infra/mongoDb/queries/MongoDb
 import { GetByPlateNumber } from "../../domain/useCases/vehicles/GetByPlateNumber";
 
 export class AppDependencies extends Container {
+
     async init() {
         mongoose.connect('mongodb://127.0.0.1:27017/VFPM');
         this.bind(VFPMIdentifiers.userCommandRepository).toConstantValue(new MongoDbUserCommandRepository());

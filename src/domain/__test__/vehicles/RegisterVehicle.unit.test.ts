@@ -1,13 +1,14 @@
 import 'reflect-metadata';
-import {InMemoryFleetCommandRepository} from "../adapters/inMemory/commands/InMemoryFleetCommandRepository";
-import {InMemoryFleetQueryRepository} from "../adapters/inMemory/queries/InMemoryFleetQueryRepository";
-import { InMemoryVehiclesCommandRepository } from '../adapters/inMemory/commands/InMemoryVehiclesCommandRepository';
-import { InMemoryVehiclesQueryRepository } from '../adapters/inMemory/queries/InMemoryVehiclesQueryRepository';
+import {InMemoryFleetCommandRepository} from "../infra/inMemory/commands/InMemoryFleetCommandRepository";
+import {InMemoryFleetQueryRepository} from "../infra/inMemory/queries/InMemoryFleetQueryRepository";
+import { InMemoryVehiclesCommandRepository } from '../infra/inMemory/commands/InMemoryVehiclesCommandRepository';
+import { InMemoryVehiclesQueryRepository } from '../infra/inMemory/queries/InMemoryVehiclesQueryRepository';
 import { Fleet } from '../../entities/Fleet';
 import { Vehicles } from '../../entities/Vehicles';
 import { FleetError } from '../../models/errors/FleetError';
 import { RegisterVehicles } from "../../useCases/vehicles/RegisterVehicles";
 import { VehiclesError } from '../../models/errors/VehiclesError';
+import { CreateVehicles } from '../../useCases/vehicles/CreateVehicles';
 
 describe("Unit - RegisterVehicles", () => {
 
@@ -23,7 +24,7 @@ describe("Unit - RegisterVehicles", () => {
   let vehiclesQueryRepo: InMemoryVehiclesQueryRepository;
 
   let registerVehicles: RegisterVehicles;
-
+  let createVehicule: CreateVehicles;
   beforeAll(async () => {
     fleetMap = new Map();
     vehiclesMap = new Map();
@@ -36,7 +37,8 @@ describe("Unit - RegisterVehicles", () => {
     vehiclesCommandRepo = new InMemoryVehiclesCommandRepository(vehiclesMap);
     vehiclesQueryRepo = new InMemoryVehiclesQueryRepository(vehiclesMap);
 
-    registerVehicles = new RegisterVehicles(fleetQueryRepo, fleetCommandRepo, vehiclesQueryRepo);
+    createVehicule = new CreateVehicles();
+    registerVehicles = new RegisterVehicles(fleetQueryRepo, fleetCommandRepo, vehiclesCommandRepo, createVehicule);
 
     await vehiclesCommandRepo.save(vehicle);
     await fleetCommandRepo.save(fleet);
@@ -45,17 +47,22 @@ describe("Unit - RegisterVehicles", () => {
   it("Should register a vehicle in a fleet", async () => {
     await registerVehicles.execute({
       fleetId: fleet.props.id,
-      vehiclesId: vehicle.props.id,
+      vehiclePlateNumber: vehicle.props.vehiclePlateNumber,
     });
     expect(fleet.props.plateNumbers[0]).toEqual(vehicle.props.vehiclePlateNumber);
   });
 
   it("Should return an error if vehicle has already been registered into fleet", async () => {
-    const result =  registerVehicles.execute({
-      fleetId: fleet.props.id,
-      vehiclesId: vehicle.props.id,
+    const fleet02 = Fleet.create();
+    fleetCommandRepo.save(fleet02);
+    const vehicles02 = Vehicles.create(fleet02.props.id, "AAA");
+    fleet02.addVehicle(vehicles02.props.vehiclePlateNumber);
+  
+    const result = registerVehicles.execute({
+      fleetId: fleet02.props.id,
+      vehiclePlateNumber: vehicles02.props.vehiclePlateNumber,
     });
-    expect(result).rejects.toThrow(FleetError.VehiclesAlreadyExisting)
+     expect(result).rejects.toThrow(FleetError.VehiclesAlreadyExisting);
 
   });
 
@@ -64,22 +71,19 @@ describe("Unit - RegisterVehicles", () => {
     await fleetCommandRepo.save(anotherFleet);
     await registerVehicles.execute({
       fleetId: anotherFleet.props.id,
-      vehiclesId: vehicle.props.id,
+      vehiclePlateNumber: vehicle.props.vehiclePlateNumber,
     });
+
     expect(anotherFleet.props.plateNumbers[0]).toEqual(vehicle.props.vehiclePlateNumber);
   });
 
-  it("Should return an error if vehicle or fleet not exist", async () => {
+  it("Should return an error if fleet not exist", async () => {
     const result01 =  registerVehicles.execute({
       fleetId: "fake id",
-      vehiclesId: vehicle.props.id,
+      vehiclePlateNumber: vehicle.props.vehiclePlateNumber,
     });
-    const result02 =  registerVehicles.execute({
-      fleetId: fleet.props.id,
-      vehiclesId: "fake id",
-    });
+
     expect(result01).rejects.toThrow(VehiclesError.RegisterVehiclesFailed)
-    expect(result02).rejects.toThrow(VehiclesError.RegisterVehiclesFailed)
 
   });
 });

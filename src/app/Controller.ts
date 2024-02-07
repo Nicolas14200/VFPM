@@ -25,40 +25,55 @@ export class Controller {
       .command("create-user <name>")
       .description("Create a user")
       .action(async (name) => {
-        const user = await this._createUser.execute(name);
-        console.log({
-          userId: user.props.id,
-        });
-        process.exit();
+        try {
+          const user = await this._createUser.execute(name);
+          console.log({
+            userId: user.props.id,
+          });
+          process.exit();
+        } catch (e) {
+          console.error({ error: e.message });
+          process.exit();
+        }
       });
 
     program
       .command("create-fleet <userId>")
       .description("Create a new fleet for the specified user")
       .action(async (userId) => {
-        const fleet = await this._createFleet.execute();
-        await this._asignFleet.execute({
-          userId,
-          fleetId: fleet.props.id,
-        });
-        console.log({
-          fleetId: fleet.props.id,
-        });
-        process.exit();
+        try {
+          const fleet = await this._createFleet.execute();
+          await this._asignFleet.execute({
+            userId,
+            fleetId: fleet.props.id,
+          });
+          console.log({
+            fleetId: fleet.props.id,
+          });
+          process.exit();
+        } catch (e) {
+          console.error({ error: e.message });
+          process.exit();
+        }
       });
 
     program
       .command("register-vehicle <fleetId> <vehiclePlateNumber>")
       .description("Register a vehicle to a fleet")
       .action(async (fleetId, vehiclePlateNumber) => {
-        await this._RegisterVehicles.execute({
-          fleetId: fleetId,
-          vehiclePlateNumber: vehiclePlateNumber,
-        });
-        console.log(
-          `Vehicle plate number : ${vehiclePlateNumber} save in fleet :${fleetId}`
-        );
-        process.exit();
+        try {
+          await this._RegisterVehicles.execute({
+            fleetId: fleetId,
+            vehiclePlateNumber: vehiclePlateNumber,
+          });
+          console.log(
+            `Vehicle plate number : ${vehiclePlateNumber} save in fleet :${fleetId}`
+          );
+          process.exit();
+        } catch (e) {
+          console.error({ error: e.message });
+          process.exit();
+        }
       });
 
     program
@@ -67,26 +82,31 @@ export class Controller {
       )
       .description("Localize a vehicle in a fleet")
       .action(async (fleetId, vehiclePlateNumber, lat, lng, alt) => {
-        const vehicles = await this._getByPlateNumber.execute(
-          vehiclePlateNumber
-        );
+        try {
+          const vehicles = await this._getByPlateNumber.execute(
+            vehiclePlateNumber
+          );
 
-        if (vehicles.props.fleetId.includes(fleetId)) {
-          await this._parkVehicles.execute({
-            vehiculeId: vehicles.props.id,
-            position: {
-              lat,
-              lng,
-              alt,
-            },
-          });
+          if (vehicles.props.fleetId.includes(fleetId)) {
+            await this._parkVehicles.execute({
+              vehiculeId: vehicles.props.id,
+              position: {
+                lat,
+                lng,
+                alt,
+              },
+            });
+          }
+
+          console.log(
+            `Vehicle ${vehiclePlateNumber} localized to (${lat}, ${lng}, ${alt}) in fleet ${fleetId}`
+          );
+
+          process.exit();
+        } catch (e) {
+          console.error({ error: e.message });
+          process.exit();
         }
-
-        console.log(
-          `Vehicle ${vehiclePlateNumber} localized to (${lat}, ${lng}, ${alt}) in fleet ${fleetId}`
-        );
-
-        process.exit();
       });
 
     program.parse(process.argv);

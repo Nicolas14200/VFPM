@@ -20,5 +20,6 @@ const config: Config.InitialOptions = {
       statements: 100,
     },
   },
+  
 };
 export default config;

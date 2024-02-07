@@ -27,7 +27,7 @@ describe("Integration - MongoDbUserCommandRepository", () => {
     expect(result.props.positions.length).toEqual(1);
   });
 
-  it("Should return null if vehicles doesn't exist via get by id", async () => {
+  it("Should return null if vehicles doesn't exist (usecase getById)", async () => {
     const result = await vehiclesQueryRepo.getById("");
     expect(result).toBeFalsy();
   });
@@ -47,7 +47,7 @@ describe("Integration - MongoDbUserCommandRepository", () => {
     expect(result.props.positions[1].lng).toEqual(10);
   });
 
-  it("Should return null if vehicles doesn't exist via get by plate number", async () => {
+  it("Should return null if vehicles doesn't exist (usecase getByPlatNumber)", async () => {
     const result = await vehiclesQueryRepo.getByPlateNumber("");
     expect(result).toBeFalsy();
   });

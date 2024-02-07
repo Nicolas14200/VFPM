@@ -24,11 +24,12 @@ To run the tests:
 `npm run cucumber`
 `npm run jest`
 
-## 🐳 Docker
+## 🐳 Db
 
-Build and execute using Docker for mongoDb:
+Build and execute mongoDb using Docker:
 
 `make db-start`
+`make db-kill`
 
 ## 🏛️ Architecture
 
@@ -43,7 +44,7 @@ This program adheres as closely as possible to the principles of clean architect
 - `make create-user USER_NAME=<Username>` => return user id
 - `make create-fleet USER_ID=<UserId>` => return fleet id
 - `make register-vehicle FLEET_ID=<fleetId> PLATE_NUMBER=<vehiclePlateNumber>`
-- `make localize-vehicle USER_ID=<IdUtilisateur> FLEET_ID=<IdParc> PLATE_NUMBER=<vehiclePlateNumber> LAT=<lat> LNG=<lng> ALT=<alt>`
+- `make localize-vehicle FLEET_ID=<fleetId> PLATE_NUMBER=<vehiclePlateNumber> LAT=<lat> LNG=<lng> ALT=<alt>`
 
 ## 🧐 Testing Details
 

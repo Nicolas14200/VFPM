@@ -30,10 +30,12 @@ Given("a vehicle", () => {
     vehiclePlateNumber: "PLAT3NU8ER01",
   };
   vehiclePark = {
-    positions: [{
-      lat: 10,
-      lng: 10,
-    }],
+    positions: [
+      {
+        lat: 10,
+        lng: 10,
+      },
+    ],
     vehiclePlateNumber: "PLAT3NU8ER02",
   };
 });

@@ -51,16 +51,12 @@ export class Controller {
       .command("register-vehicle <fleetId> <vehiclePlateNumber>")
       .description("Register a vehicle to a fleet")
       .action(async (fleetId, vehiclePlateNumber) => {
-        try {
-          await this._RegisterVehicles.execute({
-            fleetId: fleetId,
-            vehiclePlateNumber: vehiclePlateNumber,
-          });
-          process.exit();
-        } catch (e) {
-          console.log(e);
-          process.exit();
-        }
+        await this._RegisterVehicles.execute({
+          fleetId: fleetId,
+          vehiclePlateNumber: vehiclePlateNumber,
+        });
+        console.log(`Vehicle plate number : ${vehiclePlateNumber} save in fleet :${fleetId}`)
+        process.exit();
       });
 
     program

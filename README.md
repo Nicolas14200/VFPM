@@ -39,10 +39,10 @@ This program adheres as closely as possible to the principles of clean architect
 
 ## 🌍 Configuration
 
-`make create-user USER_NAME=<Username>` => return user id.
-`make create-fleet USER_ID=<UserId>` => return fleet id.
-`make register-vehicle FLEET_ID=<fleetId> PLATE_NUMBER=<vehiclePlateNumber>`.
-`make localize-vehicle USER_ID=<IdUtilisateur> FLEET_ID=<IdParc> PLATE_NUMBER=<vehiclePlateNumber> LAT=<lat> LNG=<lng> ALT=<alt>`.
+- `make create-user USER_NAME=<Username>` => return user id.
+- `make create-fleet USER_ID=<UserId>` => return fleet id.
+- `make register-vehicle FLEET_ID=<fleetId> PLATE_NUMBER=<vehiclePlateNumber>`.
+- `make localize-vehicle USER_ID=<IdUtilisateur> FLEET_ID=<IdParc> PLATE_NUMBER=<vehiclePlateNumber> LAT=<lat> LNG=<lng> ALT=<alt>`.
 
 ## 🧐 Testing Details
 

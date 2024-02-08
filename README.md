@@ -40,7 +40,7 @@ This program adheres as closely as possible to the principles of clean architect
 
 - **domain**: The heart of the application containing the business logic. This layer includes entities, use-cases, and interfaces.
 - **infra**: This layer integrates all external tools, independent from the application, such as databases and service providers. A mapper for standardizing raw data input is also present.
-- **app**: Acts as a bridge between the core and the adapters.CLI and the implementation of use-cases by the adapters are defined here.
+- **app**: Acts as a bridge between the core and the infra. CLI and the implementation of use-cases by the providers/Db are defined here.
 
 ## 🌍 CLI
 

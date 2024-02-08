@@ -14,22 +14,25 @@ Clone the repository and install the dependencies:
 
 To init the application:
 
-`make db-start`
-`make init-app`
+    make db-start
+    make init-app
 
 ## 🧪 Testing
 
 To run the tests:
 
-`npm run cucumber`
-`npm run jest`
+    npm run cucumber
+    npm run jest
 
-## 🐳 Db
+## 🐳 DataBase
 
 Build and execute mongoDb using Docker:
 
-`make db-start`
-`make db-kill`
+    make db-start
+    
+Kill mongoDb container:
+
+    make db-kill
 
 ## 🏛️ Architecture
 
